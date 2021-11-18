@@ -1,11 +1,11 @@
+// Faker to fake some data, to test API
 var faker = require("faker");
 
-var appRouter = function (app) {
 
-
-
-  app.get("/", function (req, res) {
-    res.status(200).send({ message: 'Welcome to our restful API' });
+var appRouter = function (app, uiPath) {
+  app.get("/", function (req, res, next) {
+    res.sendFile(path.join(buildPath, 'index.html'))
+    //res.status(200).send({ message: 'Welcome to our restful API' });
   });
 
   app.get("/user", function (req, res) {
@@ -39,6 +39,10 @@ var appRouter = function (app) {
    }
 
  });
+
+ app.get('(/*)?', async (req, res, next) => {
+  res.sendFile(path.join(uiPath, 'index.html'));
+});
 }
 
 module.exports = appRouter;
